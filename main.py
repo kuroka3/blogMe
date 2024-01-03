@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from domain.comment import comment_router
+from domain.thread import thread_router
+
 app = FastAPI()
 
 origins = [
@@ -17,5 +20,9 @@ app.add_middleware(
 
 
 @app.get('/')
-async def root():
+def root():
     return {'message': 'blogMe Root'}
+
+
+app.include_router(thread_router.router)
+app.include_router(comment_router.router)

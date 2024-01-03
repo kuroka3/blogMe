@@ -1,20 +1,12 @@
 <script>
-  async function root() {
-    const res = await fetch('http://127.0.0.1:8000/');
-    const json = await res.json();
+  import Router from 'svelte-spa-router'
+  import Home from './routers/Home.svelte'
+  import Thread from './routers/Thread.svelte'
 
-    if (res.ok) {
-      return json.message;
-    } else {
-      alert('error');
-    }
+  const routes = {
+    '/': Home,
+    '/thread/:thread_id': Thread
   }
-
-  let promise = root();
 </script>
 
-{#await promise}
-  <p>...waiting</p>
-{:then message}
-  <h1>{message}</h1>
-{/await}
+<Router {routes}/>
