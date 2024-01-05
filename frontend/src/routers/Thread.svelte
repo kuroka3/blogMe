@@ -1,4 +1,5 @@
 <script>
+    import date2time from '../lib/utils'
     import api from '../lib/api'
 
     export let params = {}
@@ -33,39 +34,34 @@
     }
 </script>
 
-<h1>{thread.title}</h1>
-
-<div>
-    {thread.content}
-</div>
-
-<div>
-    {thread.like}:{thread.unlike}
-</div>
-
-<ul>
+<div class="container my-3">
+    <!-- 스레드 -->
+    <h3 class="border-bottom py-2">{thread.title}</h3>
+    {thread.username} | 
+    <div class="badge bg-light text-dark p-2">{thread.date}</div>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{thread.content}</div>
+        </div>
+    </div>
+    <!-- 댓글 목록 -->
     {#each thread.comments as comment}
-        <li>{comment.content} | {comment.like}:{comment.unlike}</li>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{comment.content}</div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2">
+                    {date2time(comment.date)}
+                </div>
+            </div>
+        </div>
+    </div>
     {/each}
-</ul>
-
-<form method='post'>
-    <input type='text' bind:value={username} placeholder='닉네임'>
-    <input type='password' bind:value={pwd} placeholder='비밀번호'>
-    <textarea rows='15' bind:value={comment_content}></textarea>
-    <input type='submit' value='등록' on:click="{post_thread_comment}">
-</form>
-
-<style>
-    input[type=text], input[type=password] {
-        width:45%;
-        margin-left: 1%;
-        margin-right: 1%;
-    }
-    textarea {
-        width:100%;
-    }
-    input[type=submit] {
-        margin-top:10px;
-    }    
-</style>
+    <!-- 답변 등록 -->
+    <form method="post" class="my-3">
+        <div class="mb-3">
+            <textarea rows="10" bind:value={comment_content} class="form-control" />
+        </div>
+        <input type="submit" value="등록" class="btn btn-primary" on:click="{post_thread_comment}" />
+    </form>
+</div>

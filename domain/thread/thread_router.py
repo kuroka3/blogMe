@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 
-@router.get('/list', response_model=list[thread_schema.Thread])
+@router.get('/list', response_model=list[thread_schema.ShortThread])
 async def thread_list(db: AsyncSession = Depends(get_db)):
     _thread_list = await thread_crud.get_thread_list(db)
     return _thread_list

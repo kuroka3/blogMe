@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -17,6 +17,7 @@ class Thread(Base):
     date = Column(DateTime, nullable=False, default=datetime.datetime.now)
     like = Column(Integer, nullable=False, default=0)
     unlike = Column(Integer, nullable=False, default=0)
+    view = Column(Integer, nullable=False, default=0)
     comments = relationship('Comment', back_populates='thread')
 
 
